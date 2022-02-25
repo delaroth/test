@@ -85,7 +85,17 @@ pauseGame = (ball, paddle1, paddle2) => {
         paddle2.paddleSpeed = 30
 
         gameStatus.paused=false
-    }
+        }
+    },
+    
+    resetGame = (ball, player1, player2) => {
+        gameStatus.started = false
+        gameStatus.paused = false
+        ball.x = app.width / 2,
+        ball.y = app.height / 2,
+        ball.direction = { x: 0, y: 0 }  
+        player1.score = 0
+        player2.score = 0
 }   
 
 
