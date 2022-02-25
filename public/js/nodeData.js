@@ -4,7 +4,7 @@ const ballData = {
 	y: window.innerHeight / 2 - 10,
     velocity: 0.4,
 	velocity_increase:0.0001,
-	direction:null,
+	direction:{x:0, y:0},
     radius: 15,
 	color: 'red',
     setRandomDirection : function() {

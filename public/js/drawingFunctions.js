@@ -1,8 +1,8 @@
-function drawScore(context, score) {
+function drawScore(context, player1Score, player2Score, x, y) {
     context.font = "30px Arial";
     context.textBaseline = "middle"
     context.textAlign = "center"
-    context.fillText(`${this.score.player2}|${this.score.player1}`, this.width/2, 30)
+    context.fillText(`${player2Score}|${player1Score}`, x, y)
 }
 
 
