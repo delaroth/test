@@ -1,35 +1,56 @@
 let keysPressed = {}
 
-const addEventListeners = () => {
-    app.canvas.addEventListener("keydown", keysPressed)
-    app.canvas.addEventListener('keyup', (e) => {
-        delete keysPressed[e.key];
-    });
+const addEventListeners = (ball, paddle1, paddle2) => {
+    window.addEventListener("keydown", function(e){ keysDown(e, ball, paddle1, paddle2) })
+    window.addEventListener('keyup', (e) => {delete keysPressed[e.key];});
 }
 
 
-const keysPressed = (e) => {
+const keysDown = (e, ball, paddle1, paddle2) => {
     keysPressed[e.key] = true
-    if (keysPressed['w'] && paddle1.y >= 0) {
-       paddle1.y -= paddle1.paddleSpeed	
+
+    if (detectPaddle1Movement(paddle1, keysPressed)) {
+        const direction = detectPaddleDirection(keysPressed)
+        movePaddle(paddle1, direction)
     }
-    else if (keysPressed['s'] && paddle1.y < app.height - paddle1.height) {
-    paddle1.y += paddle1.paddleSpeed
-    }
-    if (keysPressed['ArrowUp']&& paddle2.y >= 0) {
-    paddle2.y -= paddle2.paddleSpeed
-    }
-    else if (keysPressed['ArrowDown'] && paddle2.y <= app.height-paddle2.height) {
-    paddle2.y += paddle2.paddleSpeed
+    
+    if (detectPaddle2Movement(paddle2, keysPressed)) {
+        const direction = detectPaddleDirection(keysPressed)
+        movePaddle(paddle2, direction)
     }
 
-    if (keysPressed[' ']&&!gameStatus.started) {
-startGame(ball)
+    if (keysPressed[' ']) {
+        gameStatus.started ?
+        pauseGame(ball, paddle1, paddle2) : startGame(ball)
     }
-    else if (keysPressed[' ']) {
-    pauseGame(ball, paddle1, paddle2)
-    }
-    }
+
+ }
+    
+
+const detectPaddle1Movement = (paddle1, keysPressed) => {
+    return keysPressed['w'] && paddle1.y >= 0 ||
+           keysPressed['s'] && paddle1.y < app.height - paddle1.height
+}
+
+
+const detectPaddle2Movement = (paddle2, keysPressed) => {
+    return keysPressed['ArrowUp'] && paddle2.y >= 0 ||
+           keysPressed['ArrowDown'] && paddle2.y <= app.height - paddle2.height
+}
+
+
+
+
+const detectPaddleDirection = (keysPressed) => {
+    const direction = (keysPressed['w'] && !keysPressed['s']) ||
+                      (keysPressed['ArrowUp'] && !keysPressed['ArrowDown']) ? -1 : 1
+    return direction
+}
+
+
+const movePaddle = (paddle, direction) => paddle.y += paddle.paddleSpeed*direction
+
+
 
 
 

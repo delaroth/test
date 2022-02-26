@@ -68,41 +68,35 @@ let app = {
 	onInit : function(){
 		this.nodes.push(ballData, paddle1Data, paddle2Data);
 			
-			
-			let keysPressed = {}
-			window.addEventListener("keydown", function (e) {
+	    addEventListeners(this.getNode('ball'), this.getNode('paddle-1'), this.getNode('paddle-2'))
+// 			let keysPressed = {}
+// 			window.addEventListener("keydown", function (e) {
 				
-				const paddle1 = app.getNode('paddle-1')
-				const paddle2 = app.getNode('paddle-2')
-				const ball = app.getNode('ball')	
+// 				const paddle1 = app.getNode('paddle-1')
+// 				const paddle2 = app.getNode('paddle-2')
+// 				const ball = app.getNode('ball')	
 				
-				keysPressed[e.key] = true
-				if (keysPressed['w'] && paddle1.y >= 0) {
-		paddle1.y -= paddle1.paddleSpeed	
-	}
-	else if (keysPressed['s'] && paddle1.y < app.height - paddle1.height) {
-		paddle1.y += paddle1.paddleSpeed
-	}
-	if (keysPressed['ArrowUp']&& paddle2.y >= 0) {
-		paddle2.y -= paddle2.paddleSpeed
-	}
-	else if (keysPressed['ArrowDown'] && paddle2.y <= app.height-paddle2.height) {
-		paddle2.y += paddle2.paddleSpeed
-	}
+// 				keysPressed[e.key] = true
+// 				if (keysPressed['w'] && paddle1.y >= 0) {
+// 		paddle1.y -= paddle1.paddleSpeed	
+// 	}
+// 	else if (keysPressed['s'] && paddle1.y < app.height - paddle1.height) {
+// 		paddle1.y += paddle1.paddleSpeed
+// 	}
+// 	if (keysPressed['ArrowUp']&& paddle2.y >= 0) {
+// 		paddle2.y -= paddle2.paddleSpeed
+// 	}
+// 	else if (keysPressed['ArrowDown'] && paddle2.y <= app.height-paddle2.height) {
+// 		paddle2.y += paddle2.paddleSpeed
+// 	}
 	
-	if (keysPressed[' ']&&!gameStatus.started) {
-		startGame(ball)
-	}
-	else if (keysPressed[' ']) {
-		pauseGame(ball, paddle1, paddle2)
-	}
-})
-
-
-document.addEventListener('keyup', (e) => {
-	delete keysPressed[e.key];
-});
-
+// 	if (keysPressed[' ']&&!gameStatus.started) {
+// 		startGame(ball)
+// 	}
+// 	else if (keysPressed[' ']) {
+// 		pauseGame(ball, paddle1, paddle2)
+// 	}
+// })
 
 	  },
 	  
