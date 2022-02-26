@@ -24,9 +24,17 @@ function Paddle(id, x, y) {
     this.y = y,
     this.width= window.innerHeight/70,
     this.height = window.innerHeight / 7,
-    this.paddleSpeed = 30,
+    this.paddleSpeed = 0.5,
     this.color = 'black',
     this.score =0
 }
-const paddle1Data = new Paddle('paddle-1', 20, window.innerHeight / 2 - window.innerHeight / 14)
-const paddle2Data = new Paddle('paddle-2', window.innerWidth-window.innerHeight/70-20, window.innerHeight/2- window.innerHeight / 14)
+const paddle1Data = new Paddle(
+    'paddle-1',
+    20,
+    app.height / 2 - app.height / 14)
+
+const paddle2Data = new Paddle(
+    'paddle-2',
+    app.width - app.height / 70 - 20,
+    app.height / 2 - app.height / 14
+)
