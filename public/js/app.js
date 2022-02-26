@@ -66,10 +66,7 @@ let app = {
 
 	//events
 	onInit : function(){
-		this.nodes.push(
-			ballData,
-		    paddle1Data,
-			paddle2Data);
+		this.nodes.push(ballData, paddle1Data, paddle2Data);
 			
 			
 			let keysPressed = {}
