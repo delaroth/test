@@ -9,10 +9,23 @@ let prePauseVelocity
 const paddleMovements = (paddles, dt) => {
     for (let paddle of paddles) {
         if (paddle.moving && gameStatus.started) {
-            paddle.y += paddle.paddleSpeed * paddle.direction * dt
+            switch (paddle.direction) {
+                case 'up':
+                    if (!hitTop(paddle)){
+                        paddle.y -= paddle.paddleSpeed * dt
+                    }
+                    break;
+                case 'down':
+                    if (!hitBottom(paddle)) {
+                        paddle.y += paddle.paddleSpeed * dt
+                    }
+                    break;
+        
+            }
         }
     }
 }
+
 
 
 const ballMovement = function (ball, dt) {
