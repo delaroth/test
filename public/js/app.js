@@ -68,7 +68,7 @@ let app = {
 	onInit : function(){
 		this.nodes.push(ballData, paddle1Data, paddle2Data);
 	    
-	    addEventListeners(this.getNode('ball'), this.getNode('paddle-1'), this.getNode('paddle-2'))
+	    addEventListeners(this.getNode('ball'), [ this.getNode('paddle-1'), this.getNode('paddle-2')])
 
 
 	  },

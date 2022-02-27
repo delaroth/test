@@ -6,6 +6,7 @@ const ballData = {
 	velocity_increase:0.0001,
 	direction:{x:0, y:0},
     radius: 15,
+    height: this.radius*2,
 	color: 'red',
     setRandomDirection : function() {
 	    let direction = {x: 0}
@@ -18,23 +19,36 @@ const ballData = {
 		    
 }
 
-function Paddle(id, x, y) {
+function Paddle(id, x, y, moveUp, moveDown) {
     this.id = id,
     this.x = x,
     this.y = y,
     this.width= window.innerHeight/70,
     this.height = window.innerHeight / 7,
-    this.paddleSpeed = 0.5,
+    this.defaultPaddleSpeed = 0.5,
+    this.paddleSpeed = this.defaultPaddleSpeed
     this.color = 'black',
-    this.score =0
+    this.score = 0
+    this.controls = {
+        up : moveUp,
+        down : moveDown
+    }
 }
 const paddle1Data = new Paddle(
     'paddle-1',
     20,
-    app.height / 2 - app.height / 14)
+    app.height / 2 - app.height / 14,
+    'w',
+    's'
+    
+)
+     
+    
 
 const paddle2Data = new Paddle(
     'paddle-2',
     app.width - app.height / 70 - 20,
-    app.height / 2 - app.height / 14
+    app.height / 2 - app.height / 14,
+    'ArrowUp',
+    'ArrowDown'
 )

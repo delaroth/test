@@ -8,7 +8,7 @@ let prePauseVelocity
 
 const paddleMovements = (paddles, dt) => {
     for (let paddle of paddles) {
-        if(paddle.moving && gameStatus.started) {
+        if (paddle.moving && gameStatus.started) {
             paddle.y += paddle.paddleSpeed * paddle.direction * dt
         }
     }
@@ -85,18 +85,16 @@ paddle2Impact = (ball, paddle2) => {
         }
     },
     
-    pauseGame = (ball, paddle1, paddle2) => {
+    pauseGame = (ball, paddles) => {
         if (!gameStatus.paused) {
             prePauseVelocity = ball.velocity
             ball.velocity = 0
-            paddle1.paddleSpeed = 0
-            paddle2.paddleSpeed = 0
+            for(let paddle of paddles) paddle.paddleSpeed = 0
             gameStatus.paused=true
         }
         else {
             ball.velocity = prePauseVelocity
-            paddle1.paddleSpeed = 30
-            paddle2.paddleSpeed = 30
+            for(let paddle of paddles) paddle.paddleSpeed = paddle.defaultPaddleSpeed
             gameStatus.paused=false
          }
         },

@@ -1,76 +1,59 @@
 let keysPressed = {}
 
-const addEventListeners = (ball, paddle1, paddle2) => {
-    window.addEventListener("keydown", function(e){ keysDown(e, ball, paddle1, paddle2) })
+const addEventListeners = (ball, paddles) => {
+    window.addEventListener("keydown", function(e){ keysDown(e, ball, paddles) })
     window.addEventListener('keyup', (e) => {
-        if (e.key == 'w' || e.key == 's') paddle1.moving = false
-        if (e.key == 'ArrowUp' || e.key == 'ArrowDown') paddle2.moving = false
+        for (let paddle of paddles) {
+            if (e.key === paddle.controls.up || e.key === paddle.controls.down) {
+                paddle.moving = false
+            }
+        }
         delete keysPressed[e.key];
     });
 }
 
 
-const keysDown = (e, ball, paddle1, paddle2) => {
+const keysDown = (e, ball, paddles) => {
     keysPressed[e.key] = true
     
-
-    if (detectPaddle1Movement(paddle1, keysPressed)) {
-        paddle1.direction = detectPaddleDirection(keysPressed)
-        paddle1.moving = true
+    for (let paddle of paddles) {
+        if (checkForPaddleKeysPressed(paddle, keysPressed)) {
+            paddle.direction = detectPaddleDirection(paddle, keysPressed)
+            paddle.moving = true
+        }
     }
     
-    if (detectPaddle2Movement(paddle2, keysPressed)) {
-        paddle2.direction = detectPaddleDirection(keysPressed)
-        paddle2.moving = true
-    }
-
-    if (keysPressed[' ']) {
+    if  (keysPressed[' ']) {
         gameStatus.started ?
-        pauseGame(ball, paddle1, paddle2) : startGame(ball)
+        pauseGame(ball, paddles) : startGame(ball)
     }
 
 }
- 
-// const detectPaddleMovement = (paddle, keysPressed) => {
-//     paddle.moving = false
-//     switch (paddle.id) {
-//         case 'paddle-1':
-//             console.log(paddle.id)
-//             return keysPressed['w'] && paddle.y >= 0 ||
-//                    keysPressed['s'] && paddle.y < app.height - paddle.height
-//             break;
-//         case 'paddle-2':
-//             return keysPressed['w'] && paddle.y >= 0 ||
-//                    keysPressed['s'] && paddle.y < app.height - paddle.height
-//             break;
-        
-//         default:
-//     }
-// }    
-    
 
-const detectPaddle1Movement = (paddle1, keysPressed) => {
-    paddle1.moving = false
-    return keysPressed['w'] && paddle1.y >= 0 ||
-           keysPressed['s'] && paddle1.y < app.height - paddle1.height
+const checkForPaddleKeysPressed = (paddle, keysPressed) => {
+    return keysPressed[paddle.controls.up] || keysPressed[paddle.controls.down]
 }
-
-
-
-const detectPaddle2Movement = (paddle2, keysPressed) => {
-    paddle2.moving = false
-    return (keysPressed['ArrowUp'] && paddle2.y >= 0) ||
-           (keysPressed['ArrowDown'] && paddle2.y <= app.height - paddle2.height)
-}
-
-
-
-
-const detectPaddleDirection = (keysPressed) => {
-    const direction = (keysPressed['w'] && !keysPressed['s']) ||
-                      (keysPressed['ArrowUp'] && !keysPressed['ArrowDown']) ? -1 : 1
+const detectPaddleDirection = (paddle, keysPressed) => {
+    const desiredDirection = returnDesiredPaddleDirection(paddle, keysPressed)
+    if (desiredDirection == 'up' && !hitTop(paddle)) direction = -1
+    else if (desiredDirection == 'down' && !hitBottom(paddle)) direction = 1
+    else direction = 0
     return direction
 }
+
+const returnDesiredPaddleDirection = (paddle, keysPressed) => {
+    if (keysPressed[paddle.controls.up]&&!keysPressed[paddle.controls.down]) return 'up'
+    else if (keysPressed[paddle.controls.down] && !keysPressed[paddle.controls.up]) return 'down'
+    else return false
+}
+
+const hitTop = (node) => node.y <= 0
+
+const hitBottom = (node) => node.y >= app.height - node.height
+
+
+
+
 
 
 
