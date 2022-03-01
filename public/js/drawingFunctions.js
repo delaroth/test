@@ -1,10 +1,65 @@
-function drawScore(context, player1Score, player2Score, x, y) {
-    context.font = "30px Arial";
+function drawText(context, x, y, fontSize, font, content) {
+    context.font = `${fontSize}px ${font}`;
     context.textBaseline = "middle"
     context.textAlign = "center"
-    context.fillText(`${player2Score}|${player1Score}`, x, y)
+    context.fillText(`${content}`, x, y)
 }
 
+function drawScore(context, player1Score, player2Score,) {
+    const content = `${player2Score}|${player1Score}`
+    const font = 'Ariel'
+    const fontSize = app.height / 25
+    const x = app.width / 2
+    const y = app.height / 25
+    drawText(context, x, y, `${fontSize}`, font, content)
+}
+
+function drawPlayerNames(context, player1, player2) {
+
+    const content1 = `${player1.name}`
+    const content2 = `${player2.name}`
+    const font = 'Ariel'
+    const fontSize = app.height / 25
+    const x1 = app.width / 4
+    const y = app.height / 25
+    const x2 = app.width * 3 / 4 
+
+    drawText(context, x1, y, `${fontSize}`, font, content1)
+    drawText(context, x2, y, `${fontSize}`, font, content2)
+}
+
+
+
+function drawGameInstructions(context, gameStatus) {
+    let instructions = [
+        '"SpaceBar" to start game',
+        'player 1 controls: \u0057 \u0053',
+        'player 2 controls: \u2191 \u2193']
+        if (gameStatus.paused) {
+            instructions[0] = 'Press "SpaceBar" to continue'
+        }
+        else if (gameStatus.started) {
+            instructions[0] = ['Press "SpaceBar" to pause game']
+        }
+        const font = 'Ariel'
+        const fontSize = app.height / 40
+        const x = app.width / 2
+        let y = app.height - (app.height / 25)
+        for (let instruction of instructions.reverse()) {
+            drawText(context, x, y, `${fontSize}`, font, instruction)
+        
+        y -= app.height / 25
+    }
+    
+    
+}
+
+function drawGameText(context, player1, player2, gameStatus){
+    drawPlayerNames(context, player1, player2)
+    drawScore(context, player1.score, player2.score)
+    drawGameInstructions(context, gameStatus)
+    
+}
 
 function drawBall(ball, context) {
     context.beginPath();

@@ -1,16 +1,18 @@
 let keysPressed = {}
+let spaceBarHeld = false
 
 const addEventListeners = (ball, paddles) => {
     window.addEventListener("keydown", function(e){ keysDown(e, ball, paddles) })
     window.addEventListener('keyup', (e) => {
         for (let paddle of paddles) {
             if ((e.key === paddle.controls.up && !keysPressed[paddle.controls.down]) || (e.key === paddle.controls.down && !keysPressed[paddle.controls.up])) {
-                console.log('stop moving')
                 paddle.moving = false
             }
+            if (e.key=== ' ') spaceBarHeld = false
         }
         delete keysPressed[e.key];
     });
+    // window.addEventListener('resize', function(){ adjustAppSize(ball, paddles) } );
 }
 
 
@@ -24,9 +26,10 @@ const keysDown = (e, ball, paddles) => {
         }
     }
     
-    if  (keysPressed[' ']) {
-        gameStatus.started ?
+    if  (keysPressed[' '] && !spaceBarHeld) {
+        gameStatus.started ?    
         pauseGame(ball, paddles) : startGame(ball)
+        spaceBarHeld = true       
     }
 
 }
@@ -42,9 +45,24 @@ const setPaddleDirection = (paddle, keysPressed) => {
     else return null
 }
 
-const hitTop = (node) => node.y <= 0
 
-const hitBottom = (node) => node.y >= app.height - node.height
+
+// const adjustAppSize = (ball, paddles) => {
+//     app.height = window.innerHeight
+//     app.width = window.innerWidth
+//     ball.height = app.height / 50
+//     ball.x = app.width / 2 
+//     ball.y = app.height / 2  
+//     console.log(paddles)
+//     for (let paddle of paddles) {
+//         paddle.width= window.innerHeight/70,
+//         paddle.height = window.innerHeight / 7
+//     }
+//     paddles[0].y = app.height / 2 - app.height / 14
+//     paddles[1].x = app.width - app.height / 70 - 20
+//     paddles[1].y = app.height / 2 - app.height / 14
+// }
+
 
 
 

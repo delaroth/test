@@ -38,7 +38,6 @@ let app = {
 
 		this.onUpdate(dt);
 
-		drawScore(this.context, this.getNode('paddle-2').score, this.getNode('paddle-1').score, this.width/2, 30)
 		
 		for(let index in this.nodes){
 			let node = this.nodes[index];
@@ -65,33 +64,38 @@ let app = {
 	},
 
 	//events
-	onInit : function(){
+	onInit: function () {
 		this.nodes.push(ballData, paddle1Data, paddle2Data);
 	    
-	    addEventListeners(this.getNode('ball'), [ this.getNode('paddle-1'), this.getNode('paddle-2')])
+		addEventListeners(this.getNode('ball'), [this.getNode('paddle-1'), this.getNode('paddle-2')])
 
 
-	  },
+	},
 	  
-	  onUpdate: function (dt) {
-		  const ball = this.getNode('ball')
-		  const paddle1 = this.getNode('paddle-1')
-		  const paddle2 = this.getNode('paddle-2')
-		  paddleMovements([paddle1, paddle2], dt)
-		  checkForWin(ball, paddle1, paddle2)
-		  checkForImpact(ball, paddle1, paddle2)
-		  ballMovement(ball, dt)
-		},
+	onUpdate: function (dt) {  
+		const ball = this.getNode('ball')
+		const paddle1 = this.getNode('paddle-1')
+		const paddle2 = this.getNode('paddle-2')
+		drawGameText(this.context, paddle1, paddle2, gameStatus)
+		paddleMovements([paddle1, paddle2], dt)
+		checkForWin(ball, paddle1, paddle2)
+		ballMovement(ball, dt)
+		handleImpacts(ball, [paddle1, paddle2])
+	},
 		
 	pause: function(){pauseGame(this.getNode('ball'), this.getNode('paddle-1'), this.getNode('paddle-2'))},
 	
-	reset: function () { resetGame(this.getNode('ball'), this.getNode('paddle-1'), this.getNode('paddle-2')) }
+	reset: function () { resetGame(this.getNode('ball'), this.getNode('paddle-1'), this.getNode('paddle-2')) },
+	drawText : function (context, x, y, fontSize, font, content) { drawText(context, x, y, fontSize, font, content)}
 
 };
 
 					
-					window.onload = function(){
-						app.init();
+window.onload = function () {
+    app.init();
+};
+window.onresize = function () {
+	adjustAppSize(app.getNode('ball'), [app.getNode('paddle-1'), app.getNode('paddle-2')])
 };
 					
 				
