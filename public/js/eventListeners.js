@@ -1,7 +1,7 @@
 let keysPressed = {}
 let spaceBarHeld = false
 
-const addEventListeners = (ball, paddles) => {
+const addEventListeners = (ball, paddles, canvas) => {
     window.addEventListener("keydown", function(e){ keysDown(e, ball, paddles) })
     window.addEventListener('keyup', (e) => {
         for (let paddle of paddles) {
@@ -12,7 +12,6 @@ const addEventListeners = (ball, paddles) => {
         }
         delete keysPressed[e.key];
     });
-    // window.addEventListener('resize', function(){ adjustAppSize(ball, paddles) } );
 }
 
 
@@ -47,21 +46,23 @@ const setPaddleDirection = (paddle, keysPressed) => {
 
 
 
-// const adjustAppSize = (ball, paddles) => {
-//     app.height = window.innerHeight
-//     app.width = window.innerWidth
-//     ball.height = app.height / 50
-//     ball.x = app.width / 2 
-//     ball.y = app.height / 2  
-//     console.log(paddles)
-//     for (let paddle of paddles) {
-//         paddle.width= window.innerHeight/70,
-//         paddle.height = window.innerHeight / 7
-//     }
-//     paddles[0].y = app.height / 2 - app.height / 14
-//     paddles[1].x = app.width - app.height / 70 - 20
-//     paddles[1].y = app.height / 2 - app.height / 14
-// }
+const adjustAppSize = (ball, paddles, canvas) => {
+    app.height = window.innerHeight
+    app.width = window.innerWidth
+    canvas.height = app.height
+    canvas.width = app.width
+    ball.radius = app.height / 50
+    ball.x = app.width / 2 
+    ball.y = app.height / 2  
+    console.log(paddles)
+    for (let paddle of paddles) {
+        paddle.width= window.innerHeight/70,
+        paddle.height = window.innerHeight / 7
+    }
+    paddles[0].y = app.height / 2 - app.height / 14
+    paddles[1].x = app.width - app.height / 70 - 20
+    paddles[1].y = app.height / 2 - app.height / 14
+}
 
 
 

@@ -5,10 +5,10 @@ function drawText(context, x, y, fontSize, font, content) {
     context.fillText(`${content}`, x, y)
 }
 
-function drawScore(context, player1Score, player2Score,) {
+function drawScore(context, player1Score, player2Score) {
     const content = `${player2Score}|${player1Score}`
     const font = 'Ariel'
-    const fontSize = app.height / 25
+    const fontSize = app.height / 17 <= app.width / 10 ? app.height / 17 : app.width / 8
     const x = app.width / 2
     const y = app.height / 25
     drawText(context, x, y, `${fontSize}`, font, content)
@@ -19,7 +19,7 @@ function drawPlayerNames(context, player1, player2) {
     const content1 = `${player1.name}`
     const content2 = `${player2.name}`
     const font = 'Ariel'
-    const fontSize = app.height / 25
+    const fontSize = app.height / 25 <= app.width / 10 ? app.height / 25 : app.width / 10
     const x1 = app.width / 4
     const y = app.height / 25
     const x2 = app.width * 3 / 4 
@@ -41,14 +41,18 @@ function drawGameInstructions(context, gameStatus) {
         else if (gameStatus.started) {
             instructions[0] = ['Press "SpaceBar" to pause game']
         }
-        const font = 'Ariel'
-        const fontSize = app.height / 40
+    const font = 'Ariel'
+    let lineSpacing = app.height / 25
+    fontSize = app.height / 40
+    if (app.width <800) {
+        fontSize = app.width / 10
+        lineSpacing = app.width / 10
+    }
         const x = app.width / 2
         let y = app.height - (app.height / 25)
         for (let instruction of instructions.reverse()) {
             drawText(context, x, y, `${fontSize}`, font, instruction)
-        
-        y -= app.height / 25
+            y -= lineSpacing
     }
     
     

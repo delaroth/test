@@ -67,7 +67,7 @@ let app = {
 	onInit: function () {
 		this.nodes.push(ballData, paddle1Data, paddle2Data);
 	    
-		addEventListeners(this.getNode('ball'), [this.getNode('paddle-1'), this.getNode('paddle-2')])
+		addEventListeners(this.getNode('ball'), [this.getNode('paddle-1'), this.getNode('paddle-2')], this.canvas)
 
 
 	},
@@ -92,10 +92,12 @@ let app = {
 
 					
 window.onload = function () {
-    app.init();
+	app.init();
 };
+
 window.onresize = function () {
-	adjustAppSize(app.getNode('ball'), [app.getNode('paddle-1'), app.getNode('paddle-2')])
-};
+	 adjustAppSize(app.getNode('ball'), [app.getNode('paddle-1'), app.getNode('paddle-2')], app.canvas) 
+}
+
 					
 				
