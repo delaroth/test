@@ -44,8 +44,8 @@ function drawGameInstructions(context, gameStatus) {
     const font = 'Ariel'
     let lineSpacing = app.height / 25
     fontSize = app.height / 40
-    if (app.width <800) {
-        fontSize = app.width / 10
+    if (app.height / 25 >= app.width / 15) {
+        fontSize = app.width / 15
         lineSpacing = app.width / 10
     }
         const x = app.width / 2
@@ -53,16 +53,13 @@ function drawGameInstructions(context, gameStatus) {
         for (let instruction of instructions.reverse()) {
             drawText(context, x, y, `${fontSize}`, font, instruction)
             y -= lineSpacing
-    }
-    
-    
+    } 
 }
 
 function drawGameText(context, player1, player2, gameStatus){
     drawPlayerNames(context, player1, player2)
     drawScore(context, player1.score, player2.score)
     drawGameInstructions(context, gameStatus)
-    
 }
 
 function drawBall(ball, context) {
